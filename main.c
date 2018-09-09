@@ -20,20 +20,37 @@ typedef enum {
   HLT
 } InstructionSet;
 
+typedef enum {
+  A,
+  B,
+  C,
+  D,
+  E,
+  IP,
+  SP,
+  REGN
+} Registers;
+
 const int program[] = {
   PSH, 5,
   PSH, 6,
   ADD,
   POP,
+  SET, A, 5,
   HLT
 };
 
-int ip = 0, sp = -1;
 int running = 1;
 int stack[100];
+int registers[REGN];
+
+#define sp (registers[SP])
+#define ip (registers[IP])
 
 int main()
 {
+  sp = -1;
+  ip = 0;
   while (running) {
     eval(fetch());
     ip++;
@@ -71,6 +88,12 @@ void eval(int instr)
       x = stack[sp--];
       y = stack[sp--];
       stack[sp] = x + y;
+      break;
+
+    case SET:
+      x = program[++ip];
+      y = program[++ip];
+      registers[x] = y;
       break;
   }
 }
