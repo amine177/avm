@@ -44,5 +44,9 @@ void eval(int instr)
       running = 0;
       break;
 
+    case PSH:
+      sp++;
+      stack[sp] = program[++ip];
+      break;
   }
 }
