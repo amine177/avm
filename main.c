@@ -1,3 +1,14 @@
+#include <stdio.h>
+
+/*
+ * A simple virtual machine with instructions:
+ *  PSH x     : push into the stack an int
+ *  POP       : pops from the stack and print for debugging
+ *  ADD       : pops tow ints from the stack, adds them and pushes
+ *              the result onto the stack
+ *  SET REG x : sets register REG to x
+ *  HLT       : ends execution
+ */
 int fetch();
 void eval(int);
 
@@ -39,6 +50,9 @@ int fetch()
 
 void eval(int instr)
 {
+  int x;
+  int y;
+
   switch(instr) {
     case HLT:
       running = 0;
@@ -47,6 +61,16 @@ void eval(int instr)
     case PSH:
       sp++;
       stack[sp] = program[++ip];
+      break;
+
+    case POP:
+      x = stack[sp--];
+      printf("debug: popped %d\n", x);
+      break;
+    case ADD:
+      x = stack[sp--];
+      y = stack[sp--];
+      stack[sp] = x + y;
       break;
   }
 }
