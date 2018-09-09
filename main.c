@@ -17,6 +17,7 @@ typedef enum {
   ADD,
   POP,
   SET,
+  JMP,
   HLT
 } InstructionSet;
 
@@ -37,6 +38,11 @@ const int program[] = {
   ADD,
   POP,
   SET, A, 5,
+  JMP, 11,
+  PSH, 6,
+  PSH, 5,
+  ADD,
+  POP,
   HLT
 };
 
@@ -78,11 +84,12 @@ void eval(int instr)
     case PSH:
       sp++;
       stack[sp] = program[++ip];
+      printf("debug: PSH %d\n", program[ip]);
       break;
 
     case POP:
       x = stack[sp--];
-      printf("debug: popped %d\n", x);
+      printf("debug: POP %d\n", x);
       break;
     case ADD:
       x = stack[sp--];
@@ -94,6 +101,12 @@ void eval(int instr)
       x = program[++ip];
       y = program[++ip];
       registers[x] = y;
+      break;
+
+    case JMP:
+      x = program[++ip];
+      ip = x-1;
+      printf("debug: JMP %d\n", x);
       break;
   }
 }
