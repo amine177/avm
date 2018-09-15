@@ -7,6 +7,7 @@
  *  ADD       : pops tow ints from the stack, adds them and pushes
  *              the result onto the stack
  *  SET REG x : sets register REG to x
+ *  JMP x     : jumps to x address in the program
  *  HLT       : ends execution
  */
 int fetch();
