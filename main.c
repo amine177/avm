@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 /*
  * A simple virtual machine with instructions:
@@ -16,6 +17,7 @@ void eval(int);
 typedef enum {
   PSH,
   ADD,
+  DIV,
   POP,
   SET,
   JMP,
@@ -108,6 +110,18 @@ void eval(int instr)
       x = program[++ip];
       ip = x-1;
       printf("debug: JMP %d\n", x);
+      break;
+
+    case DIV:
+      x = stack[sp--];
+      y = program[sp--];
+      if (!y) {
+        printf("debug: Divison By zero");
+        exit(1);
+      }
+
+      stack[sp] = x / y;
+      printf("debug: DIV %d \\ %d\n", x, y);
       break;
   }
 }
