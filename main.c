@@ -6,6 +6,7 @@
  *  PSH x     : push into the stack an int
  *  POP       : pops from the stack and print for debugging
  *  ADD       : pops tow ints from the stack, adds them and pushes
+ *  DIV       : pops tow ints from the stack, adds them and pushes
  *              the result onto the stack
  *  SET REG x : sets register REG to x
  *  JMP x     : jumps to x address in the program
